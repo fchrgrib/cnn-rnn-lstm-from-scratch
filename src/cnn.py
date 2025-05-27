@@ -1,17 +1,16 @@
-import numpy as np
-import pickle
 import os
-from typing import Dict, List, Tuple, Union, Optional, Any
+import pickle
+from typing import Dict, Tuple, Optional
+
+import numpy as np
 from numpy.lib.stride_tricks import as_strided
 
 
 class CNNFromScratch:
     def __init__(self, model_path: str):
         """
-        Initialize CNN model from a Keras model pickle file.
-
-        Args:
-            model_path: Path to the Keras model pickle file
+        Initialize CNNFromScratch with model path.
+        :param model_path: Path to the model pkl file
         """
         self.model_path = model_path
         self.weights = self._load_model()
@@ -31,7 +30,7 @@ class CNNFromScratch:
     def add_layer(self, layer_type: str, **kwargs) -> 'CNNFromScratch':
         """
         Optimized layer addition with type checking
-        layer_type: str [dense, conv2d, maxpooling2d]
+        :param layer_type: str [dense, conv2d, maxpooling2d]
         """
         layer_type = layer_type.lower()
         layer_map = {
@@ -71,10 +70,7 @@ class CNNFromScratch:
     def _activation(self, x: np.ndarray, activation: str) -> np.ndarray:
         """
         Calculate activation function.
-
-        Args:
-            x: Input array
-            activation: Activation function name (e.g., 'relu', 'sigmoid', 'tanh', 'softmax', 'linear')
+        :param x: Input data
         """
         activations = {
             'relu': lambda x: np.maximum(0, x),
