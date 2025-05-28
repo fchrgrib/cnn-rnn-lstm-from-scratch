@@ -12,12 +12,16 @@ class CNNFromScratch:
         Initialize CNNFromScratch with model path.
         :param model_path: Path to the model pkl file
         """
+
         self.model_path = model_path
         self.weights = self._load_model()
         self.layers = []
 
     def _load_model(self) -> Dict[str, np.ndarray]:
-        """Load Model Pkl File"""
+        """
+        Load model weights from a pickle file.
+        :return: Dictionary of weights
+        """
         if not os.path.exists(self.model_path):
             raise FileNotFoundError(f"Model file {self.model_path} not found")
 
@@ -31,7 +35,10 @@ class CNNFromScratch:
         """
         Optimized layer addition with type checking
         :param layer_type: str [dense, conv2d, maxpooling2d]
+        :param kwargs: Additional parameters for the layer
+        :return: self
         """
+
         layer_type = layer_type.lower()
         layer_map = {
             'dense': {
@@ -71,7 +78,10 @@ class CNNFromScratch:
         """
         Calculate activation function.
         :param x: Input data
+        :param activation: Activation function name
+        :return: Activated data
         """
+
         activations = {
             'relu': lambda x: np.maximum(0, x),
             'sigmoid': lambda x: 1 / (1 + np.exp(-x)),
@@ -97,6 +107,7 @@ class CNNFromScratch:
         :param padding:
         :return:
         """
+
         batch_size, in_height, in_width, in_channels = input_data.shape
         kernel_h, kernel_w = kernel_size
         stride_h, stride_w = strides
@@ -137,6 +148,7 @@ class CNNFromScratch:
         The einsum operation computes the dot product between the strided input and the weights.
         The output shape will be (batch_size, out_height, out_width, filters).
         """
+
         output = np.einsum('bhwijc,ijcf->bhwf', strided_input, weights)
         output += bias  # Add bias
 
@@ -151,6 +163,7 @@ class CNNFromScratch:
         :param strides:
         :return:
         """
+
         batch_size, in_height, in_width, channels = input_data.shape
         pool_h, pool_w = pool_size
         stride_h, stride_w = strides if strides is not None else pool_size
@@ -180,6 +193,7 @@ class CNNFromScratch:
         :param bias:
         :return:
         """
+
         return np.dot(input_data, weights) + bias
 
     def _flatten(self, input_data: np.ndarray) -> np.ndarray:
@@ -188,6 +202,7 @@ class CNNFromScratch:
         :param input_data:
         :return:
         """
+
         return input_data.reshape(input_data.shape[0], -1)
 
     def _forward(self, input_data: np.ndarray) -> np.ndarray:
@@ -196,6 +211,7 @@ class CNNFromScratch:
         :param input_data:
         :return:
         """
+
         x = input_data
 
         for layer in self.layers:
@@ -234,6 +250,7 @@ class CNNFromScratch:
         :param input_data:
         :return:
         """
+
         if len(input_data.shape) == 3:
             input_data = np.expand_dims(input_data, axis=0)
         elif len(input_data.shape) != 4:

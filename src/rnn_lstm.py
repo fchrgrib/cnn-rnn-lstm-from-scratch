@@ -182,10 +182,10 @@ class RNNLSTMFromScratch:
         X = np.clip(X.astype(int), 0, embeddings.shape[0] - 1)
 
         # Apply embedding lookup
-        embedded = embeddings[X]  # (batch_size, seq_len, embedding_dim)
+        embedded = embeddings[X]
 
         # Create mask for zero-padded positions
-        mask = self._create_mask(X, mask_value=0)  # (batch_size, seq_len)
+        mask = self._create_mask(X, mask_value=0)
 
         return embedded, mask
 
@@ -216,9 +216,9 @@ class RNNLSTMFromScratch:
             # Compute new hidden state
             # h_t = tanh(W_input * x_t + W_recurrent * h + bias)
             h_new = np.tanh(
-                np.dot(x_t, W_input) +  # (batch_size, hidden_dim)
-                np.dot(h, W_recurrent) +  # (batch_size, hidden_dim)
-                bias  # (hidden_dim,)
+                np.dot(x_t, W_input) +
+                np.dot(h, W_recurrent) +
+                bias
             )
 
             # Apply mask if provided
@@ -228,7 +228,7 @@ class RNNLSTMFromScratch:
             else:
                 h = h_new
 
-        return h  # Return final hidden state (batch_size, hidden_dim)
+        return h
 
     def lstm(self, X, layer_name, mask=None):
         """
@@ -328,7 +328,7 @@ class RNNLSTMFromScratch:
 
             elif layer_type == 'SimpleRNN':
                 current_output = self.simple_rnn(current_output, layer_name, mask)
-                # After RNN, we no longer need the mask for subsequent layers
+                # After SimpleRNN, we no longer need the mask for subsequent layers
                 mask = None
 
             elif layer_type == 'LSTM':
@@ -351,5 +351,6 @@ class RNNLSTMFromScratch:
         :param X:
         :return:
         """
+
         predictions = self.predict(X)
         return np.argmax(predictions, axis=1)
