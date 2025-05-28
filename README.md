@@ -13,8 +13,10 @@ root/
 │   ├── rnn.ipynb
 │   └── lstm.ipynb
 ├── model/
-│   ├── .gitkeep
-│   └── model_weights.h5
+│   ├── cnn.pkl (manually saved model)
+│   ├── rnn.pkl (manually saved model)
+│   ├── lstm.pkl (manually saved model)
+│   └── .gitkeep
 ├── data/
 │   ├── train.csv
 │   ├── test.csv
