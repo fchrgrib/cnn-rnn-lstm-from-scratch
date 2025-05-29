@@ -6,6 +6,7 @@ class RNNLSTMFromScratch:
     def __init__(self, model_path):
         """
         Initialize RNNForwardProp with model path.
+
         :param model_path: Path to the pickled Keras model
         """
 
@@ -42,6 +43,7 @@ class RNNLSTMFromScratch:
     def parse_weights(self, weights, model):
         """
         Parse weights from the model and assign them to the weights dictionary.
+
         :param weights: List of weight arrays from the model
         :param model: Keras model instance
         :return: None
@@ -85,6 +87,8 @@ class RNNLSTMFromScratch:
     def _activation(self, x: np.array, activation: str):
         """
         Apply activation function to the input array.
+        This method supports ReLU, Sigmoid, Tanh, Softmax, and Linear activations.
+
         :param x:
         :param activation:
         :return:
@@ -108,7 +112,10 @@ class RNNLSTMFromScratch:
 
     def _softmax(self, x):
         """
-        Compute softmax for the input array.
+        Softmax is a function that converts logits to probabilities.
+        It is numerically stable by subtracting the max value.
+        This implementation supports both 1D and 2D inputs.
+
         :param x:
         :return:
         """
@@ -125,7 +132,9 @@ class RNNLSTMFromScratch:
 
     def _get_dropout_rate(self, layer_name):
         """
-        Get the dropout rate for a given layer.
+        Dropout rate is a hyperparameter that controls the fraction of input units to drop.
+        This method retrieves the dropout rate for a given layer.
+
         :param layer_name:
         :return:
         """
@@ -137,7 +146,9 @@ class RNNLSTMFromScratch:
 
     def _dropout(self, X, layer_name, training=False):
         """
-        Apply dropout to the input data during training.
+        Dropout is a regularization technique to prevent overfitting.
+        It randomly sets a fraction of input units to zero during training.
+
         :param X:
         :param layer_name:
         :param training:
@@ -156,7 +167,10 @@ class RNNLSTMFromScratch:
 
     def _create_mask(self, X, mask_value=0):
         """
-        Create a mask for the input data to identify non-masked positions.
+        Mask is used to ignore certain values in the input data.
+        This method creates a mask for the input data where the mask_value is considered as padding.
+        Masking is useful for handling variable-length sequences in RNNs.
+
         :param X:
         :param mask_value:
         :return:
@@ -166,7 +180,9 @@ class RNNLSTMFromScratch:
 
     def embedding(self, X, layer_name):
         """
-        Forward propagation for embedding layer with masking support
+        Embedding layer converts integer indices to dense vectors.
+        This method retrieves the embedding weights and applies them to the input indices.
+
         :param X:
         :param layer_name:
         :return:
@@ -191,7 +207,9 @@ class RNNLSTMFromScratch:
 
     def simple_rnn(self, X, layer_name, mask=None):
         """
-        Forward propagation for SimpleRNN with masking
+        Simple RNN is a basic recurrent layer that processes sequences.
+        This method performs forward propagation through a SimpleRNN layer.
+
         :param X:
         :param layer_name:
         :param mask:
@@ -232,7 +250,9 @@ class RNNLSTMFromScratch:
 
     def lstm(self, X, layer_name, mask=None):
         """
-        Forward propagation for LSTM layer with masking support
+        LSTM (Long Short-Term Memory) is a type of RNN that can learn long-term dependencies.
+        This method performs forward propagation through an LSTM layer.
+
         :param X:
         :param layer_name:
         :param mask:
@@ -282,7 +302,9 @@ class RNNLSTMFromScratch:
 
     def dense(self, X, layer_name, activation='linear'):
         """
-        Forward propagation for Dense layer
+        Dense layer performs a linear transformation followed by an activation function.
+        This method applies the weights and bias of a Dense layer to the input data.
+
         :param X:
         :param layer_name:
         :param activation:
@@ -301,7 +323,9 @@ class RNNLSTMFromScratch:
 
     def predict(self, X, training=False):
         """
-        Custom forward propagation through the model layers
+        This method performs forward propagation through the RNN/LSTM model.
+        It processes the input data through each layer in sequence, applying the appropriate operations.
+
         :param X: Input data (integer sequences for embedding)
         :param training: Whether to apply dropout
         :return: Output predictions
@@ -348,6 +372,7 @@ class RNNLSTMFromScratch:
     def predict_classes(self, X):
         """
         Predict class labels for the input data.
+
         :param X:
         :return:
         """

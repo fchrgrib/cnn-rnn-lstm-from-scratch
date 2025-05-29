@@ -10,6 +10,7 @@ class CNNFromScratch:
     def __init__(self, model_path: str):
         """
         Initialize CNNFromScratch with model path.
+
         :param model_path: Path to the model pkl file
         """
 
@@ -20,6 +21,7 @@ class CNNFromScratch:
     def _load_model(self) -> Dict[str, np.ndarray]:
         """
         Load model weights from a pickle file.
+
         :return: Dictionary of weights
         """
         if not os.path.exists(self.model_path):
@@ -33,8 +35,10 @@ class CNNFromScratch:
 
     def add_layer(self, layer_type: str, **kwargs) -> 'CNNFromScratch':
         """
-        Optimized layer addition with type checking
-        :param layer_type: str [dense, conv2d, maxpooling2d]
+        This method is used to add a layer to the CNN model.
+        Supported layer types: dense, conv2d, maxpooling2d, flatten.
+
+        :param layer_type: str
         :param kwargs: Additional parameters for the layer
         :return: self
         """
@@ -76,7 +80,9 @@ class CNNFromScratch:
 
     def _activation(self, x: np.ndarray, activation: str) -> np.ndarray:
         """
-        Calculate activation function.
+        Activation function to apply non-linearity to the data.
+        Supported activations: relu, sigmoid, tanh, softmax, linear.
+
         :param x: Input data
         :param activation: Activation function name
         :return: Activated data
@@ -98,7 +104,9 @@ class CNNFromScratch:
                 bias: np.ndarray, kernel_size: Tuple[int, int],
                 strides: Tuple[int, int], padding: str) -> np.ndarray:
         """
-        Conv 2D operation using strided view for optimized performance.
+        Conv 2D is a method to perform a 2D convolution operation.
+        this method operation using strided view for optimized performance.
+
         :param input_data:
         :param weights:
         :param bias:
@@ -157,7 +165,9 @@ class CNNFromScratch:
     def _maxpool2d(self, input_data: np.ndarray, pool_size: Tuple[int, int],
                    strides: Optional[Tuple[int, int]] = None) -> np.ndarray:
         """
-        Max pooling operation using strided view for optimized performance.
+        Max pooling operation to downsample the input data.
+        this method operation using strided view for optimized performance.
+
         :param input_data:
         :param pool_size:
         :param strides:
@@ -187,7 +197,9 @@ class CNNFromScratch:
 
     def _dense(self, input_data: np.ndarray, weights: np.ndarray, bias: np.ndarray) -> np.ndarray:
         """
-        Dense layer operation using matrix multiplication.
+        Dense layer operation to perform a fully connected layer.
+        this operation using matrix multiplication numpy.
+
         :param input_data:
         :param weights:
         :param bias:
@@ -199,6 +211,7 @@ class CNNFromScratch:
     def _flatten(self, input_data: np.ndarray) -> np.ndarray:
         """
         Flatten operation to convert input data to 2D.
+
         :param input_data:
         :return:
         """
@@ -207,7 +220,8 @@ class CNNFromScratch:
 
     def _forward(self, input_data: np.ndarray) -> np.ndarray:
         """
-        Forward pass through the CNN layers.
+        Forward Propagation method to process the input data through the network.
+
         :param input_data:
         :return:
         """
@@ -247,6 +261,7 @@ class CNNFromScratch:
     def predict(self, input_data: np.ndarray) -> np.ndarray:
         """
         Predict method to handle both single sample and batch inputs.
+
         :param input_data:
         :return:
         """

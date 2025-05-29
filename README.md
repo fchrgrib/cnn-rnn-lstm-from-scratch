@@ -9,18 +9,18 @@ root/
 ├── src/
 │   ├── cnn.py
 │   ├── rnn_lstm.py
-│   ├── cnn.ipynb
-│   ├── rnn.ipynb
-│   └── lstm.ipynb
+│   ├── cnn.ipynb (Jupyter Notebook for CNN)
+│   ├── rnn.ipynb (Jupyter Notebook for RNN)
+│   └── lstm.ipynb (Jupyter Notebook for LSTM)
 ├── model/
 │   ├── cnn.pkl (manually saved model)
 │   ├── rnn.pkl (manually saved model)
 │   ├── lstm.pkl (manually saved model)
 │   └── .gitkeep
-├── data/
+├── data/ (NusaX dataset for RNN and LSTM)
 │   ├── train.csv
-│   ├── test.csv
-│   └── validation.csv
+│   ├── test.csv 
+│   └── validation.csv 
 └── README.md
 ```
 
