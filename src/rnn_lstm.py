@@ -170,6 +170,7 @@ class RNNLSTMFromScratch:
         Mask is used to ignore certain values in the input data.
         This method creates a mask for the input data where the mask_value is considered as padding.
         Masking is useful for handling variable-length sequences in RNNs.
+        The default value for masking is 0, which is common in NLP tasks.
 
         :param X:
         :param mask_value:
@@ -228,7 +229,7 @@ class RNNLSTMFromScratch:
 
         # Process each timestep
         for t in range(seq_len):
-            # Get current input (batch_size, input_dim)
+            # Get current input
             x_t = X[:, t, :]
 
             # Compute new hidden state
@@ -270,6 +271,7 @@ class RNNLSTMFromScratch:
         h = np.zeros((batch_size, hidden_size))
         c = np.zeros((batch_size, hidden_size))
 
+        # Process each timestep
         for t in range(seq_len):
             # Compute all gates at once
             # gates = W_input * x_t + W_recurrent * h + bias

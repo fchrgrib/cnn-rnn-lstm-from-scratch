@@ -260,7 +260,7 @@ class CNNFromScratch:
 
     def predict(self, input_data: np.ndarray) -> np.ndarray:
         """
-        Predict method to handle both single sample and batch inputs.
+        Predict method to handle both single sample and batch inputs (if have).
 
         :param input_data:
         :return:
