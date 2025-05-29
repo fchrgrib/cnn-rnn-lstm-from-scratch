@@ -212,7 +212,7 @@ class RNNLSTMFromScratch:
 
         :param X:
         :param layer_name:
-        :param mask:
+        :param mask: Mask to handle variable-length sequences
         :return:
         """
 
@@ -255,7 +255,7 @@ class RNNLSTMFromScratch:
 
         :param X:
         :param layer_name:
-        :param mask:
+        :param mask: Mask to handle variable-length sequences
         :return:
         """
 
@@ -276,16 +276,21 @@ class RNNLSTMFromScratch:
             gates = np.dot(X[:, t, :], W_input) + np.dot(h, W_recurrent) + bias
 
             # Split gates (input, forget, candidate, output) - Keras order
+            # i_gate = sigmoid(W_input * x_t + W_recurrent * h + bias[:hidden_size])
             i_gate = self._activation(gates[:, :hidden_size], 'sigmoid')
+
+            # f_gate = sigmoid(W_input * x_t + W_recurrent * h + bias[hidden_size:2*hidden_size])
             f_gate = self._activation(gates[:, hidden_size:2 * hidden_size], 'sigmoid')
+
+            # c_candidate = tanh(W_input * x_t + W_recurrent * h + bias[2*hidden_size:3*hidden_size])
             c_candidate = self._activation(gates[:, 2 * hidden_size:3 * hidden_size], 'tanh')
+
+            # o_gate = sigmoid(W_input * x_t + W_recurrent * h + bias[3*hidden_size:])
             o_gate = self._activation(gates[:, 3 * hidden_size:], 'sigmoid')
 
-            # Update cell state
             # c_new = f_gate * c + i_gate * c_candidate
             c_new = f_gate * c + i_gate * c_candidate
 
-            # Update hidden state
             # h_new = o_gate * tanh(c_new)
             h_new = o_gate * self._activation(c_new, 'tanh')
 
