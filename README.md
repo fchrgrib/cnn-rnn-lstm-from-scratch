@@ -20,7 +20,11 @@ root/
 ├── data/ (NusaX dataset for RNN and LSTM)
 │   ├── train.csv
 │   ├── test.csv 
-│   └── validation.csv 
+│   └── validation.csv
+├── doc/
+│   └──  Tubes_II.pdf
+├── .gitignore 
+├── requirements.txt
 └── README.md
 ```
 
